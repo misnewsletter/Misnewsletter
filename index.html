@@ -821,10 +821,10 @@
   <p class="section-eyebrow">¿Hablamos?</p>
   <h2>Tu negocio merece<br/>que te <em>recuerden.</em></h2>
   <p>Deja tu email y te escribo en menos de 24 horas para contarte cómo podría funcionar una newsletter para tu negocio concreto.</p>
-  <div class="contact-form">
-    <input type="email" id="emailInput" placeholder="tu@negocio.com"/>
-    <button onclick="handleContact()">Quiero saber más</button>
-  </div>
+  <form class="contact-form" action="https://formspree.io/f/mykqjkyv" method="POST" id="contactForm">
+    <input type="email" name="email" id="emailInput" placeholder="tu@negocio.com" required/>
+    <button type="submit">Quiero saber más</button>
+  </form>
   <p class="form-note">Sin compromiso. Solo una conversación.</p>
 </section>
 
