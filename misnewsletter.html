@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Misnewsletter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #1A1A2E;
+      --paper:   #F5F0E8;
+      --orange:  #E8734A;
+      --muted:   #6B7280;
+      --light:   #EDE8DF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(26,26,46,0.08);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .logo span { color: var(--orange); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--orange) !important; color: var(--paper) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 8rem 3rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      color: var(--ink);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    /* ── SUBSCRIBE FORM ── */
+    .subscribe-form {
+      display: flex;
+      gap: 0;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .subscribe-form input {
+      flex: 1;
+      padding: 1rem 1.4rem;
+      border: 2px solid var(--ink);
+      border-right: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 2px 0 0 2px;
+    }
+    .subscribe-form input::placeholder { color: var(--muted); }
+    .subscribe-form input:focus { border-color: var(--orange); }
+
+    .subscribe-form button {
+      padding: 1rem 1.8rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: 2px solid var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      border-radius: 0 2px 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .subscribe-form button:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+    .send-icon {
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+    .subscribe-form button:hover .send-icon {
+      transform: translateX(3px) translateY(-3px);
+    }
+
+    .form-note {
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(26,26,46,0.12);
+      margin: 0 3rem;
+    }
+
+    /* ── NUMBERS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+      gap: 2rem;
+    }
+
+    .stat-item {
+      border-left: 2px solid var(--orange);
+      padding-left: 1.5rem;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--ink);
+      padding: 6rem 3rem;
+    }
+
+    .features-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .features h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--paper);
+      line-height: 1.15;
+      margin-bottom: 3.5rem;
+      max-width: 600px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      border: 1px solid rgba(245,240,232,0.1);
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .feature-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--paper);
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.7;
+    }
+
+    /* ── SAMPLE ISSUE ── */
+    .sample {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 3rem;
+    }
+
+    .sample-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .sample h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .issue-preview {
+      background: white;
+      border: 1px solid rgba(26,26,46,0.1);
+      padding: 2.5rem;
+      box-shadow: 0 8px 40px rgba(26,26,46,0.08);
+    }
+
+    .issue-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--light);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .issue-num {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .issue-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .issue-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      line-height: 1.25;
+    }
+
+    .issue-body {
+      font-size: 0.92rem;
+      color: #3a3a4a;
+      line-height: 1.85;
+    }
+
+    .issue-body p + p { margin-top: 1rem; }
+
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--orange);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: gap 0.2s;
+      cursor: pointer;
+    }
+    .read-more:hover { gap: 0.8rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 3rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--paper);
+      margin-bottom: 0.8rem;
+    }
+    .footer-logo span { color: var(--orange); }
+
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.4);
+      margin-top: 0.4rem;
+    }
+
+    footer nav {
+      background: transparent;
+      position: static;
+      border: none;
+      justify-content: center;
+      margin-top: 1.5rem;
+      padding: 0;
+    }
+    footer nav ul { gap: 1.5rem; }
+    footer nav ul a { color: rgba(245,240,232,0.5); }
+    footer nav ul a:hover { color: var(--paper); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    h1             { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-sub      { animation: fadeUp 0.6s 0.2s ease both; }
+    .subscribe-form{ animation: fadeUp 0.6s 0.3s ease both; }
+    .form-note     { animation: fadeUp 0.6s 0.4s ease both; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.9rem 1.5rem;
+      font-size: 0.88rem;
+      border-left: 3px solid var(--orange);
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(.22,.68,0,1.2);
+      z-index: 999;
+    }
+    .toast.show { transform: translateX(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero, .stats, .sample { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .features { padding: 4rem 1.5rem; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .subscribe-form { flex-direction: column; }
+      .subscribe-form input { border-right: 2px solid var(--ink); border-bottom: none; border-radius: 2px 2px 0 0; }
+      .subscribe-form input:focus { border-color: var(--orange); }
+      .subscribe-form button { border-radius: 0 0 2px 2px; justify-content: center; }
+      footer nav { display: none; }
+      .divider { margin: 0 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="#">Mis<span>newsletter</span></a>
+    <ul>
+      <li><a href="#features">Cómo funciona</a></li>
+      <li><a href="#sample">Ejemplo</a></li>
+      <li><a href="#subscribe" class="nav-cta">Suscribirse</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="subscribe">
+    <p class="hero-eyebrow">Cada semana en tu bandeja</p>
+    <h1>Lo que vale<br/>la pena <em>leer.</em></h1>
+    <p class="hero-sub">
+      Una newsletter hecha con cuidado: ideas, reflexiones y recursos
+      seleccionados para que empieces la semana con claridad.
+    </p>
+    <div class="subscribe-form">
+      <input type="email" id="emailInput" placeholder="tu@correo.com" aria-label="Email" />
+      <button onclick="handleSubscribe()">
+        Suscribirse
+        <span class="send-icon">↗</span>
+      </button>
+    </div>
+    <p class="form-note">Sin spam. Puedes darte de baja cuando quieras.</p>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-number">52</div>
+      <div class="stat-label">Ediciones al año</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5'</div>
+      <div class="stat-label">Lectura semanal</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">0€</div>
+      <div class="stat-label">Completamente gratis</div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-inner">
+      <p class="section-label">Por qué suscribirse</p>
+      <h2>Una carta que esperas recibir cada semana.</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✦</div>
+          <h3>Curado a mano</h3>
+          <p>Nada de algoritmos. Cada enlace y reflexión está elegido con intención, no por relevancia viral.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">◎</div>
+          <h3>Enfocado</h3>
+          <p>Sin relleno. Cada edición tiene un hilo conductor claro para que puedas leer y pasar a la acción.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">◈</div>
+          <h3>Directo al grano</h3>
+          <p>Breve pero denso en valor. Pensado para personas ocupadas que quieren aprender sin perder tiempo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE -->
+  <section class="sample" id="sample">
+    <div class="sample-header">
+      <div>
+        <p class="section-label">Vista previa</p>
+        <h2>Un ejemplo de edición</h2>
+      </div>
+    </div>
+    <div class="issue-preview">
+      <div class="issue-meta">
+        <span class="issue-num">Edición #001</span>
+        <span class="issue-date">Lunes, 27 de junio de 2026</span>
+      </div>
+      <h3 class="issue-title">Empezar: la única estrategia que siempre funciona</h3>
+      <div class="issue-body">
+        <p>Hay una cosa que separa a quienes crean de quienes planean crear: el momento en que deciden enviar. No cuando está perfecto, no cuando tienen más seguidores, no cuando termine el verano.</p>
+        <p>Esta semana quiero hablarte de eso: del acto de empezar como acto de valentía. Y de por qué la primera versión de cualquier cosa siempre será mejor que ninguna versión.</p>
+        <p>Bienvenido a Misnewsletter. Esta es la primera edición, y lo más importante que puedo decirte es que ya estás aquí.</p>
+      </div>
+      <span class="read-more">Leer edición completa →</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Mis<span>newsletter</span></div>
+    <p>Hecho con cuidado · Cada semana</p>
+    <nav>
+      <ul>
+        <li><a href="#">Archivo</a></li>
+        <li><a href="#">Sobre mí</a></li>
+        <li><a href="#">Privacidad</a></li>
+      </ul>
+    </nav>
+    <p style="margin-top:1.5rem;">© 2026 Misnewsletter</p>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">¡Apuntado! Te escribimos pronto 📬</div>
+
+  <script>
+    function handleSubscribe() {
+      const input = document.getElementById('emailInput');
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        input.style.borderColor = '#e74c3c';
+        input.focus();
+        setTimeout(() => input.style.borderColor = '', 1500);
+        return;
+      }
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      input.value = '';
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    document.getElementById('emailInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleSubscribe();
+    });
+  </script>
+</body>
+</html>
