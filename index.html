@@ -7,620 +7,157 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --black:   #0A0A0A;
-      --white:   #FFFFFF;
-      --blue:    #1B4FFF;
-      --gray:    #F4F4F4;
-      --mid:     #6B6B6B;
-      --border:  #E0E0E0;
+      --black: #0A0A0A; --white: #FFFFFF; --blue: #1B4FFF;
+      --gray: #F4F4F4; --mid: #6B6B6B; --border: #E0E0E0;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-weight: 400; color: var(--black); background: var(--white); line-height: 1.6; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      color: var(--black);
-      background: var(--white);
-      line-height: 1.6;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 4rem;
-      background: rgba(10,10,10,0.96);
-      backdrop-filter: blur(10px);
-    }
-
-    .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      color: var(--white);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-    }
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 4rem; background: rgba(10,10,10,0.96); backdrop-filter: blur(10px); }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--white); text-decoration: none; letter-spacing: -0.01em; }
     .logo span { color: var(--blue); }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2.5rem;
-      align-items: center;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
+    .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 0.82rem; color: rgba(255,255,255,0.5); letter-spacing: 0.03em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--blue) !important; color: var(--white) !important; padding: 0.5rem 1.3rem !important; font-weight: 500 !important; }
 
-    .nav-cta {
-      background: var(--blue) !important;
-      color: var(--white) !important;
-      padding: 0.5rem 1.3rem !important;
-      font-weight: 500 !important;
-      transition: opacity 0.2s !important;
-    }
-    .nav-cta:hover { opacity: 0.85 !important; }
+    /* LANG SELECTOR */
+    .lang-selector { position: relative; }
+    .lang-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 0.4rem 0.8rem; font-family: 'Inter', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: border-color 0.2s; }
+    .lang-btn:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+    .lang-dropdown { display: none; position: absolute; top: calc(100% + 0.5rem); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); min-width: 130px; z-index: 200; }
+    .lang-dropdown.open { display: block; }
+    .lang-option { display: block; width: 100%; padding: 0.6rem 1rem; background: transparent; border: none; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; font-size: 0.8rem; text-align: left; cursor: pointer; transition: background 0.15s, color 0.15s; }
+    .lang-option:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+    .lang-option.active { color: var(--blue); }
 
-    /* ── HERO ── */
-    .hero {
-      background: var(--black);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 10rem 4rem 6rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(27,79,255,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
+    /* HERO */
+    .hero { background: var(--black); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 10rem 4rem 6rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(27,79,255,0.12) 0%, transparent 70%); pointer-events: none; }
     .hero-inner { max-width: 1000px; }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue);
-      font-weight: 500;
-      margin-bottom: 2rem;
-    }
-    .hero-tag::before {
-      content: '';
-      width: 1.5rem;
-      height: 1px;
-      background: var(--blue);
-    }
-
-    .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.2rem, 7vw, 6rem);
-      color: var(--white);
-      line-height: 1.0;
-      letter-spacing: -0.03em;
-      margin-bottom: 2rem;
-      max-width: 820px;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--blue);
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 1.8vw, 1.15rem);
-      color: rgba(255,255,255,0.5);
-      max-width: 520px;
-      line-height: 1.8;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: var(--blue);
-      color: var(--white);
-      padding: 0.9rem 2rem;
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
+    .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin-bottom: 2rem; }
+    .hero-tag::before { content: ''; width: 1.5rem; height: 1px; background: var(--blue); }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3.2rem, 7vw, 6rem); color: var(--white); line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 2rem; max-width: 820px; }
+    .hero h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub { font-size: clamp(1rem, 1.8vw, 1.15rem); color: rgba(255,255,255,0.5); max-width: 520px; line-height: 1.8; margin-bottom: 3rem; font-weight: 300; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--blue); color: var(--white); padding: 0.9rem 2rem; font-size: 0.88rem; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: opacity 0.2s; }
     .btn-primary:hover { opacity: 0.85; }
-
-    .btn-ghost {
-      background: transparent;
-      color: rgba(255,255,255,0.6);
-      padding: 0.9rem 2rem;
-      font-size: 0.88rem;
-      border: 1px solid rgba(255,255,255,0.15);
-      text-decoration: none;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .btn-ghost { background: transparent; color: rgba(255,255,255,0.6); padding: 0.9rem 2rem; font-size: 0.88rem; border: 1px solid rgba(255,255,255,0.15); text-decoration: none; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
     .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
 
-    /* ── TICKER ── */
-    .ticker {
-      background: var(--blue);
-      padding: 0.8rem 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .ticker-inner {
-      display: inline-flex;
-      gap: 3rem;
-      animation: ticker 20s linear infinite;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-    }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+    /* TICKER */
+    .ticker { background: var(--blue); padding: 0.8rem 0; overflow: hidden; white-space: nowrap; }
+    .ticker-inner { display: inline-flex; gap: 3rem; animation: ticker 20s linear infinite; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .ticker-dot { color: rgba(255,255,255,0.4); }
 
-    /* ── NUMBERS ── */
-    .numbers {
-      background: var(--black);
-      padding: 5rem 4rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .numbers-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .number-item {
-      background: var(--black);
-      padding: 3rem 2.5rem;
-    }
-
-    .number-value {
-      font-family: 'DM Serif Display', serif;
-      font-size: 3.5rem;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.03em;
-    }
+    /* NUMBERS */
+    .numbers { background: var(--black); padding: 5rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .numbers-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.08); }
+    .number-item { background: var(--black); padding: 3rem 2.5rem; }
+    .number-value { font-family: 'DM Serif Display', serif; font-size: 3.5rem; color: var(--white); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
     .number-value span { color: var(--blue); }
+    .number-label { font-size: 0.78rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.5; }
 
-    .number-label {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      line-height: 1.5;
-    }
+    /* PROBLEM */
+    .problem { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin-bottom: 1.2rem; }
+    .problem h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 3.5rem; max-width: 680px; }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .problem-card { background: var(--white); padding: 2.5rem; }
+    .problem-card .icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .problem-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; margin-bottom: 0.6rem; line-height: 1.3; }
+    .problem-card p { font-size: 0.88rem; color: var(--mid); line-height: 1.75; }
 
-    /* ── PROBLEM ── */
-    .problem {
-      padding: 7rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue);
-      font-weight: 500;
-      margin-bottom: 1.2rem;
-    }
-
-    .problem h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 3.5rem;
-      max-width: 680px;
-    }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .problem-card {
-      background: var(--white);
-      padding: 2.5rem;
-    }
-
-    .problem-card .icon {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .problem-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
-    }
-
-    .problem-card p {
-      font-size: 0.88rem;
-      color: var(--mid);
-      line-height: 1.75;
-    }
-
-    /* ── RESULTS ── */
-    .results {
-      background: var(--gray);
-      padding: 7rem 4rem;
-    }
-
-    .results-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .results h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-    }
-
-    .results-sub {
-      font-size: 1rem;
-      color: var(--mid);
-      margin-bottom: 4rem;
-      max-width: 500px;
-    }
-
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .result-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .result-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--blue);
-    }
-
-    .result-pct {
-      font-family: 'DM Serif Display', serif;
-      font-size: 3rem;
-      color: var(--blue);
-      line-height: 1;
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.03em;
-    }
-
-    .result-sector {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--mid);
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .result-desc {
-      font-size: 0.88rem;
-      color: var(--mid);
-      line-height: 1.7;
-    }
-
+    /* RESULTS */
+    .results { background: var(--gray); padding: 7rem 4rem; }
+    .results-inner { max-width: 1100px; margin: 0 auto; }
+    .results h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .results-sub { font-size: 1rem; color: var(--mid); margin-bottom: 4rem; max-width: 500px; }
+    .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .result-card { background: var(--white); border: 1px solid var(--border); padding: 2.5rem; position: relative; overflow: hidden; }
+    .result-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--blue); }
+    .result-pct { font-family: 'DM Serif Display', serif; font-size: 3rem; color: var(--blue); line-height: 1; margin-bottom: 0.4rem; letter-spacing: -0.03em; }
+    .result-sector { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mid); font-weight: 500; margin-bottom: 1rem; }
+    .result-desc { font-size: 0.88rem; color: var(--mid); line-height: 1.7; }
     .result-desc strong { color: var(--black); font-weight: 500; }
 
-    /* ── HOW ── */
-    .how {
-      padding: 7rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    /* HOW */
+    .how { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .how h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 4rem; max-width: 600px; }
+    .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .how-step { border-top: 2px solid var(--black); padding-top: 1.5rem; }
+    .step-num { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 1rem; }
+    .how-step h3 { font-family: 'DM Serif Display', serif; font-size: 1.15rem; margin-bottom: 0.6rem; line-height: 1.3; }
+    .how-step p { font-size: 0.83rem; color: var(--mid); line-height: 1.7; }
 
-    .how h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 4rem;
-      max-width: 600px;
-    }
-
-    .how-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-    }
-
-    .how-step {
-      border-top: 2px solid var(--black);
-      padding-top: 1.5rem;
-    }
-
-    .step-num {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--blue);
-      margin-bottom: 1rem;
-    }
-
-    .how-step h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem;
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
-    }
-
-    .how-step p {
-      font-size: 0.83rem;
-      color: var(--mid);
-      line-height: 1.7;
-    }
-
-    /* ── PORTFOLIO ── */
-    .portfolio {
-      background: var(--black);
-      padding: 7rem 4rem;
-    }
-
+    /* PORTFOLIO */
+    .portfolio { background: var(--black); padding: 7rem 4rem; }
     .portfolio-inner { max-width: 1100px; margin: 0 auto; }
-
     .portfolio .section-eyebrow { color: rgba(255,255,255,0.4); }
-
-    .portfolio h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: var(--white);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 3.5rem;
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .portfolio-card {
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 2.5rem;
-      transition: border-color 0.3s;
-    }
+    .portfolio h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); color: var(--white); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 3.5rem; }
+    .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .portfolio-card { border: 1px solid rgba(255,255,255,0.08); padding: 2.5rem; transition: border-color 0.3s; }
     .portfolio-card:hover { border-color: var(--blue); }
+    .portfolio-sector { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); font-weight: 500; margin-bottom: 1rem; }
+    .portfolio-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.6rem; line-height: 1.3; }
+    .portfolio-card p { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 1.5rem; }
+    .portfolio-metric { display: flex; align-items: baseline; gap: 0.5rem; }
+    .metric-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--blue); line-height: 1; }
+    .metric-label { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+    .portfolio-link { display: inline-block; margin-top: 1.5rem; font-size: 0.8rem; font-weight: 500; color: var(--blue); letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; }
 
-    .portfolio-sector {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--blue);
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .portfolio-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      color: var(--white);
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
-    }
-
-    .portfolio-card p {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.75;
-      margin-bottom: 1.5rem;
-    }
-
-    .portfolio-metric {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-    }
-
-    .metric-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
-      color: var(--blue);
-      line-height: 1;
-    }
-
-    .metric-label {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.35);
-    }
-
-    /* ── CTA FINAL ── */
-    .cta-final {
-      padding: 8rem 4rem;
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .cta-final h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-    }
-
-    .cta-final h2 em {
-      font-style: italic;
-      color: var(--blue);
-    }
-
-    .cta-final p {
-      font-size: 1rem;
-      color: var(--mid);
-      margin-bottom: 2.5rem;
-      line-height: 1.8;
-    }
-
-    .contact-form {
-      display: flex;
-      gap: 0;
-      max-width: 480px;
-      margin: 0 auto 1rem;
-    }
-
-    .contact-form input {
-      flex: 1;
-      padding: 0.95rem 1.2rem;
-      border: 2px solid var(--black);
-      border-right: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      outline: none;
-      background: var(--white);
-      transition: border-color 0.2s;
-    }
+    /* CTA */
+    .cta-final { padding: 8rem 4rem; text-align: center; max-width: 700px; margin: 0 auto; }
+    .cta-final h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .cta-final h2 em { font-style: italic; color: var(--blue); }
+    .cta-final p { font-size: 1rem; color: var(--mid); margin-bottom: 2.5rem; line-height: 1.8; }
+    .contact-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto 1rem; }
+    .contact-form input { flex: 1; padding: 0.95rem 1.2rem; border: 2px solid var(--black); border-right: none; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; background: var(--white); transition: border-color 0.2s; }
     .contact-form input:focus { border-color: var(--blue); }
     .contact-form input::placeholder { color: #aaa; }
-
-    .contact-form button {
-      padding: 0.95rem 1.5rem;
-      background: var(--black);
-      color: var(--white);
-      border: 2px solid var(--black);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
+    .contact-form button { padding: 0.95rem 1.5rem; background: var(--black); color: var(--white); border: 2px solid var(--black); font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
     .contact-form button:hover { background: var(--blue); border-color: var(--blue); }
+    .form-note { font-size: 0.75rem; color: #aaa; }
 
-    .form-note {
-      font-size: 0.75rem;
-      color: #aaa;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--black);
-      padding: 3rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .footer-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--white);
-    }
+    /* FOOTER */
+    footer { background: var(--black); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--white); }
     .footer-logo span { color: var(--blue); }
+    footer p { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
 
-    footer p {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.3);
-    }
-
-    /* ── TOAST ── */
-    .toast {
-      position: fixed;
-      bottom: 2rem; right: 2rem;
-      background: var(--black);
-      color: var(--white);
-      padding: 1rem 1.5rem;
-      font-size: 0.85rem;
-      border-left: 3px solid var(--blue);
-      transform: translateX(130%);
-      transition: transform 0.4s cubic-bezier(.22,.68,0,1.2);
-      z-index: 999;
-    }
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--black); color: var(--white); padding: 1rem 1.5rem; font-size: 0.85rem; border-left: 3px solid var(--blue); transform: translateX(130%); transition: transform 0.4s cubic-bezier(.22,.68,0,1.2); z-index: 999; }
     .toast.show { transform: translateX(0); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero-tag  { animation: fadeUp 0.5s ease both; }
-    .hero h1   { animation: fadeUp 0.5s 0.1s ease both; }
-    .hero-sub  { animation: fadeUp 0.5s 0.2s ease both; }
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-tag { animation: fadeUp 0.5s ease both; }
+    .hero h1 { animation: fadeUp 0.5s 0.1s ease both; }
+    .hero-sub { animation: fadeUp 0.5s 0.2s ease both; }
     .hero-actions { animation: fadeUp 0.5s 0.3s ease both; }
 
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .hero, .problem, .results, .how, .portfolio, .cta-final { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .lang-selector { display: block !important; }
+      nav { gap: 1rem; }
+      .hero, .problem, .how, .cta-final { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .results { padding: 4rem 1.5rem; }
+      .portfolio { padding: 4rem 1.5rem; }
       .numbers { padding: 3rem 1.5rem; }
       footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
       .numbers-inner { grid-template-columns: 1fr 1fr; }
-      .problem-grid { grid-template-columns: 1fr; }
-      .results-grid { grid-template-columns: 1fr; }
+      .problem-grid, .results-grid, .portfolio-grid { grid-template-columns: 1fr; }
       .how-steps { grid-template-columns: 1fr 1fr; }
-      .portfolio-grid { grid-template-columns: 1fr; }
       .contact-form { flex-direction: column; }
       .contact-form input { border-right: 2px solid var(--black); border-bottom: none; }
-      .contact-form input:focus { border-color: var(--blue); }
-      .contact-form button { }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
@@ -629,42 +166,50 @@
 <nav>
   <a class="logo" href="#">Mis<span>newsletter</span></a>
   <ul class="nav-links">
-    <li><a href="#resultados">Resultados</a></li>
-    <li><a href="#como">Cómo funciona</a></li>
-    <li><a href="#trabajos">Trabajos</a></li>
-    <li><a href="#contacto" class="nav-cta">Hablemos</a></li>
+    <li><a href="#resultados" data-i18n="nav_results">Resultados</a></li>
+    <li><a href="#como" data-i18n="nav_how">Cómo funciona</a></li>
+    <li><a href="#trabajos" data-i18n="nav_work">Trabajos</a></li>
+    <li><a href="#contacto" class="nav-cta" data-i18n="nav_cta">Hablemos</a></li>
   </ul>
+  <div class="lang-selector">
+    <button class="lang-btn" onclick="toggleLang()">🌐 <span id="currentLang">ES</span> ▾</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button class="lang-option active" onclick="setLang('es')">🇪🇸 Español</button>
+      <button class="lang-option" onclick="setLang('en')">🇬🇧 English</button>
+      <button class="lang-option" onclick="setLang('pt')">🇵🇹 Português</button>
+      <button class="lang-option" onclick="setLang('de')">🇩🇪 Deutsch</button>
+      <button class="lang-option" onclick="setLang('it')">🇮🇹 Italiano</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <p class="hero-tag">Newsletters para negocios</p>
-    <h1>Tu negocio necesita<br/>clientes, no <em>seguidores.</em></h1>
-    <p class="hero-sub">
-      Creo newsletters estratégicas que convierten lectores en clientes. Sin relleno, sin algoritmos, sin depender de las redes sociales.
-    </p>
+    <p class="hero-tag" data-i18n="hero_tag">Newsletters para negocios</p>
+    <h1 data-i18n="hero_h1">Tu negocio necesita<br/>clientes, no <em>seguidores.</em></h1>
+    <p class="hero-sub" data-i18n="hero_sub">Creo newsletters estratégicas que convierten lectores en clientes. Sin relleno, sin algoritmos, sin depender de las redes sociales.</p>
     <div class="hero-actions">
-      <a href="#contacto" class="btn-primary">Quiero una newsletter →</a>
-      <a href="#resultados" class="btn-ghost">Ver resultados</a>
+      <a href="#contacto" class="btn-primary" data-i18n="hero_btn1">Quiero una newsletter →</a>
+      <a href="#resultados" class="btn-ghost" data-i18n="hero_btn2">Ver resultados</a>
     </div>
   </div>
 </section>
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-inner">
-    <span>Email marketing ROI medio: 3.600%</span>
+  <div class="ticker-inner" id="tickerInner">
+    <span data-i18n="ticker1">Email marketing ROI medio: 3.600%</span>
     <span class="ticker-dot">◆</span>
-    <span>El email tiene 4× más alcance que las redes sociales</span>
+    <span data-i18n="ticker2">El email tiene 4× más alcance que las redes sociales</span>
     <span class="ticker-dot">◆</span>
-    <span>59% de los consumidores dice que el email influye en sus compras</span>
+    <span data-i18n="ticker3">59% de los consumidores dice que el email influye en sus compras</span>
     <span class="ticker-dot">◆</span>
-    <span>Email marketing ROI medio: 3.600%</span>
+    <span data-i18n="ticker1">Email marketing ROI medio: 3.600%</span>
     <span class="ticker-dot">◆</span>
-    <span>El email tiene 4× más alcance que las redes sociales</span>
+    <span data-i18n="ticker2">El email tiene 4× más alcance que las redes sociales</span>
     <span class="ticker-dot">◆</span>
-    <span>59% de los consumidores dice que el email influye en sus compras</span>
+    <span data-i18n="ticker3">59% de los consumidores dice que el email influye en sus compras</span>
     <span class="ticker-dot">◆</span>
   </div>
 </div>
@@ -674,217 +219,354 @@
   <div class="numbers-inner">
     <div class="number-item">
       <div class="number-value"><span class="count" data-target="3600">0</span><span>%</span></div>
-      <div class="number-label">ROI medio del<br/>email marketing</div>
+      <div class="number-label" data-i18n="num1">ROI medio del<br/>email marketing</div>
     </div>
     <div class="number-item">
       <div class="number-value"><span class="count" data-target="47">0</span><span>%</span></div>
-      <div class="number-label">Aumento medio de<br/>clientes recurrentes</div>
+      <div class="number-label" data-i18n="num2">Aumento medio de<br/>clientes recurrentes</div>
     </div>
     <div class="number-item">
       <div class="number-value"><span class="count" data-target="4">0</span><span>×</span></div>
-      <div class="number-label">Más alcance que<br/>Instagram o TikTok</div>
+      <div class="number-label" data-i18n="num3">Más alcance que<br/>Instagram o TikTok</div>
     </div>
     <div class="number-item">
       <div class="number-value"><span class="count" data-target="62">0</span><span>%</span></div>
-      <div class="number-label">De los clientes que vuelven<br/>llegan por email</div>
+      <div class="number-label" data-i18n="num4">De los clientes que vuelven<br/>llegan por email</div>
     </div>
   </div>
 </section>
 
 <!-- PROBLEM -->
 <section class="problem">
-  <p class="section-eyebrow">El problema</p>
-  <h2>Tienes un negocio que funciona. Pero tus clientes se olvidan de ti.</h2>
+  <p class="section-eyebrow" data-i18n="prob_eyebrow">El problema</p>
+  <h2 data-i18n="prob_h2">Tienes un negocio que funciona. Pero tus clientes se olvidan de ti.</h2>
   <div class="problem-grid">
-    <div class="problem-card">
-      <div class="icon">📱</div>
-      <h3>Las redes sociales no son tuyas</h3>
-      <p>Mañana puede cambiar el algoritmo y perderlo todo. Tu lista de email es un activo que nadie te puede quitar.</p>
-    </div>
-    <div class="problem-card">
-      <div class="icon">🔁</div>
-      <h3>El cliente que no repite es dinero perdido</h3>
-      <p>Captar un cliente nuevo cuesta entre 5 y 7 veces más que retener uno existente. La newsletter mantiene la relación activa.</p>
-    </div>
-    <div class="problem-card">
-      <div class="icon">⏱️</div>
-      <h3>No tienes tiempo de escribir cada semana</h3>
-      <p>Lo sé. Por eso existo. Yo me encargo de todo: estrategia, redacción y envío. Tú solo supervisas en 10 minutos.</p>
-    </div>
-    <div class="problem-card">
-      <div class="icon">📉</div>
-      <h3>Sin comunicación constante, el negocio se estanca</h3>
-      <p>Los negocios que se comunican regularmente con sus clientes crecen un 23% más rápido que los que no lo hacen.</p>
-    </div>
+    <div class="problem-card"><div class="icon">📱</div><h3 data-i18n="prob1_h">Las redes sociales no son tuyas</h3><p data-i18n="prob1_p">Mañana puede cambiar el algoritmo y perderlo todo. Tu lista de email es un activo que nadie te puede quitar.</p></div>
+    <div class="problem-card"><div class="icon">🔁</div><h3 data-i18n="prob2_h">El cliente que no repite es dinero perdido</h3><p data-i18n="prob2_p">Captar un cliente nuevo cuesta entre 5 y 7 veces más que retener uno existente. La newsletter mantiene la relación activa.</p></div>
+    <div class="problem-card"><div class="icon">⏱️</div><h3 data-i18n="prob3_h">No tienes tiempo de escribir cada semana</h3><p data-i18n="prob3_p">Lo sé. Por eso existo. Yo me encargo de todo: estrategia, redacción y envío. Tú solo supervisas en 10 minutos.</p></div>
+    <div class="problem-card"><div class="icon">📉</div><h3 data-i18n="prob4_h">Sin comunicación constante, el negocio se estanca</h3><p data-i18n="prob4_p">Los negocios que se comunican regularmente con sus clientes crecen un 23% más rápido que los que no lo hacen.</p></div>
   </div>
 </section>
 
 <!-- RESULTS -->
 <section class="results" id="resultados">
   <div class="results-inner">
-    <p class="section-eyebrow">Resultados reales</p>
-    <h2>Lo que consiguen los negocios<br/>con una newsletter bien hecha</h2>
-    <p class="results-sub">Datos de clientes en sectores de servicios locales y profesionales.</p>
+    <p class="section-eyebrow" data-i18n="res_eyebrow">Resultados reales</p>
+    <h2 data-i18n="res_h2">Lo que consiguen los negocios<br/>con una newsletter bien hecha</h2>
+    <p class="results-sub" data-i18n="res_sub">Datos de clientes en sectores de servicios locales y profesionales.</p>
     <div class="results-grid">
-      <div class="result-card">
-        <div class="result-pct">+38%</div>
-        <div class="result-sector">Clínica de fisioterapia</div>
-        <div class="result-desc">Aumento de <strong>citas recurrentes</strong> en los primeros 4 meses. Los pacientes volvían antes de que el dolor reapareciera.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-pct">+52%</div>
-        <div class="result-sector">Salón de peluquería</div>
-        <div class="result-desc">Incremento en <strong>reservas directas</strong> sin pasar por plataformas intermediarias en 6 meses de newsletter mensual.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-pct">×2.4</div>
-        <div class="result-sector">Consultoría B2B</div>
-        <div class="result-desc">Multiplicaron sus <strong>contactos cualificados</strong> entrantes. Los prospectos llegaban ya convencidos del valor del servicio.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-pct">+29%</div>
-        <div class="result-sector">Centro de estética</div>
-        <div class="result-desc">Crecimiento en <strong>ticket medio por cliente</strong> al comunicar nuevos servicios de forma estratégica cada mes.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-pct">68%</div>
-        <div class="result-sector">Tasa de apertura media</div>
-        <div class="result-desc">Frente al 21% de media del sector. <strong>Más del doble</strong> de lectores reales porque el contenido aporta valor genuino.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-pct">+41%</div>
-        <div class="result-sector">Estudio de arquitectura</div>
-        <div class="result-desc">Aumento de <strong>presupuestos solicitados</strong> tras 3 meses mostrando proyectos y criterio profesional en cada edición.</div>
-      </div>
+      <div class="result-card"><div class="result-pct">+38%</div><div class="result-sector" data-i18n="res1_sector">Clínica de fisioterapia</div><div class="result-desc" data-i18n="res1_desc">Aumento de <strong>citas recurrentes</strong> en los primeros 4 meses. Los pacientes volvían antes de que el dolor reapareciera.</div></div>
+      <div class="result-card"><div class="result-pct">+52%</div><div class="result-sector" data-i18n="res2_sector">Salón de peluquería</div><div class="result-desc" data-i18n="res2_desc">Incremento en <strong>reservas directas</strong> sin pasar por plataformas intermediarias en 6 meses de newsletter mensual.</div></div>
+      <div class="result-card"><div class="result-pct">×2.4</div><div class="result-sector" data-i18n="res3_sector">Consultoría B2B</div><div class="result-desc" data-i18n="res3_desc">Multiplicaron sus <strong>contactos cualificados</strong> entrantes. Los prospectos llegaban ya convencidos del valor del servicio.</div></div>
+      <div class="result-card"><div class="result-pct">+29%</div><div class="result-sector" data-i18n="res4_sector">Centro de estética</div><div class="result-desc" data-i18n="res4_desc">Crecimiento en <strong>ticket medio por cliente</strong> al comunicar nuevos servicios de forma estratégica cada mes.</div></div>
+      <div class="result-card"><div class="result-pct">68%</div><div class="result-sector" data-i18n="res5_sector">Tasa de apertura media</div><div class="result-desc" data-i18n="res5_desc">Frente al 21% de media del sector. <strong>Más del doble</strong> de lectores reales porque el contenido aporta valor genuino.</div></div>
+      <div class="result-card"><div class="result-pct">+41%</div><div class="result-sector" data-i18n="res6_sector">Estudio de arquitectura</div><div class="result-desc" data-i18n="res6_desc">Aumento de <strong>presupuestos solicitados</strong> tras 3 meses mostrando proyectos y criterio profesional en cada edición.</div></div>
     </div>
   </div>
 </section>
 
 <!-- HOW -->
 <section class="how" id="como">
-  <p class="section-eyebrow">El proceso</p>
-  <h2>De cero a newsletter funcionando en dos semanas.</h2>
+  <p class="section-eyebrow" data-i18n="how_eyebrow">El proceso</p>
+  <h2 data-i18n="how_h2">De cero a newsletter funcionando en dos semanas.</h2>
   <div class="how-steps">
-    <div class="how-step">
-      <div class="step-num">PASO 01</div>
-      <h3>Sesión de estrategia</h3>
-      <p>Entiendo tu negocio, tus clientes y qué quieres conseguir. Defino el tono, la frecuencia y los temas que van a funcionar.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">PASO 02</div>
-      <h3>Primera edición</h3>
-      <p>Redacto la primera newsletter y te la presento. La revisas, me das feedback y queda lista para enviar.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">PASO 03</div>
-      <h3>Envío y análisis</h3>
-      <p>Gestiono el envío y te entrego métricas claras: aperturas, clics, respuestas. Sabes exactamente qué funciona.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">PASO 04</div>
-      <h3>Mejora continua</h3>
-      <p>Cada edición es mejor que la anterior. Aprendo qué conecta con tu audiencia y afino el contenido cada mes.</p>
-    </div>
+    <div class="how-step"><div class="step-num" data-i18n="step1_num">PASO 01</div><h3 data-i18n="step1_h">Sesión de estrategia</h3><p data-i18n="step1_p">Entiendo tu negocio, tus clientes y qué quieres conseguir. Defino el tono, la frecuencia y los temas que van a funcionar.</p></div>
+    <div class="how-step"><div class="step-num" data-i18n="step2_num">PASO 02</div><h3 data-i18n="step2_h">Primera edición</h3><p data-i18n="step2_p">Redacto la primera newsletter y te la presento. La revisas, me das feedback y queda lista para enviar.</p></div>
+    <div class="how-step"><div class="step-num" data-i18n="step3_num">PASO 03</div><h3 data-i18n="step3_h">Envío y análisis</h3><p data-i18n="step3_p">Gestiono el envío y te entrego métricas claras: aperturas, clics, respuestas. Sabes exactamente qué funciona.</p></div>
+    <div class="how-step"><div class="step-num" data-i18n="step4_num">PASO 04</div><h3 data-i18n="step4_h">Mejora continua</h3><p data-i18n="step4_p">Cada edición es mejor que la anterior. Aprendo qué conecta con tu audiencia y afino el contenido cada mes.</p></div>
   </div>
 </section>
 
 <!-- PORTFOLIO -->
 <section class="portfolio" id="trabajos">
   <div class="portfolio-inner">
-    <p class="section-eyebrow">Trabajos recientes</p>
-    <h2>Newsletters que ya están<br/>generando resultados.</h2>
+    <p class="section-eyebrow" data-i18n="port_eyebrow">Trabajos recientes</p>
+    <h2 data-i18n="port_h2">Newsletters que ya están<br/>generando resultados.</h2>
     <div class="portfolio-grid">
       <div class="portfolio-card">
         <div class="portfolio-sector">Fisioterapia · Salud</div>
         <h3>Fisio Activa Granada</h3>
-        <p>Newsletter mensual de consejos posturales y bienestar. Contenido educativo que posiciona a la clínica como referente y genera citas antes de que el dolor se agrave.</p>
-        <div class="portfolio-metric">
-          <div class="metric-num">+38%</div>
-          <div class="metric-label">citas recurrentes<br/>en 4 meses</div>
-        </div>
+        <p data-i18n="port1_p">Newsletter mensual de consejos posturales y bienestar. Contenido educativo que posiciona a la clínica como referente y genera citas antes de que el dolor se agrave.</p>
+        <div class="portfolio-metric"><div class="metric-num">+38%</div><div class="metric-label" data-i18n="port1_metric">citas recurrentes<br/>en 4 meses</div></div>
+        <a href="newsletter_Fisio_Activa.pdf" target="_blank" class="portfolio-link" data-i18n="port_see">Ver ejemplo →</a>
       </div>
       <div class="portfolio-card">
         <div class="portfolio-sector">Belleza · Servicios locales</div>
         <h3>Carla Estilistas</h3>
-        <p>Newsletter estacional de tendencias, cuidado capilar y promociones exclusivas para clientas. Convierte lectoras en reservas directas sin depender de Instagram.</p>
-        <div class="portfolio-metric">
-          <div class="metric-num">+52%</div>
-          <div class="metric-label">reservas directas<br/>en 6 meses</div>
-        </div>
+        <p data-i18n="port2_p">Newsletter estacional de tendencias, cuidado capilar y promociones exclusivas para clientas. Convierte lectoras en reservas directas sin depender de Instagram.</p>
+        <div class="portfolio-metric"><div class="metric-num">+52%</div><div class="metric-label" data-i18n="port2_metric">reservas directas<br/>en 6 meses</div></div>
+        <a href="newsletter_carla_estilistas.html" target="_blank" class="portfolio-link" data-i18n="port_see">Ver ejemplo →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL -->
+<!-- CTA -->
 <section class="cta-final" id="contacto">
-  <p class="section-eyebrow">¿Hablamos?</p>
-  <h2>Tu negocio merece<br/>que te <em>recuerden.</em></h2>
-  <p>Deja tu email y te escribo en menos de 24 horas para contarte cómo podría funcionar una newsletter para tu negocio concreto.</p>
+  <p class="section-eyebrow" data-i18n="cta_eyebrow">¿Hablamos?</p>
+  <h2 data-i18n="cta_h2">Tu negocio merece<br/>que te <em>recuerden.</em></h2>
+  <p data-i18n="cta_p">Deja tu email y te escribo en menos de 24 horas para contarte cómo podría funcionar una newsletter para tu negocio concreto.</p>
   <form class="contact-form" action="https://formspree.io/f/mykqjkyv" method="POST" id="contactForm">
-    <input type="email" name="email" id="emailInput" placeholder="tu@negocio.com" required/>
-    <button type="submit">Quiero saber más</button>
+    <input type="email" name="email" id="emailInput" placeholder="tu@negocio.com" required data-i18n-placeholder="cta_placeholder"/>
+    <button type="submit" data-i18n="cta_btn">Quiero saber más</button>
   </form>
-  <p class="form-note">Sin compromiso. Solo una conversación.</p>
+  <p class="form-note" data-i18n="cta_note">Sin compromiso. Solo una conversación.</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Mis<span>newsletter</span></div>
-  <p>© 2026 · Newsletters que convierten</p>
+  <p data-i18n="footer_copy">© 2026 · Newsletters que convierten</p>
 </footer>
 
-<!-- TOAST -->
-<div class="toast" id="toast">Recibido. Te escribo en menos de 24h 📩</div>
+<div class="toast" id="toast" data-i18n="toast_msg">Recibido. Te escribo en menos de 24h 📩</div>
 
 <script>
-  // Counter animation
-  function animateCounters() {
-    document.querySelectorAll('.count').forEach(el => {
-      const target = +el.dataset.target;
-      const duration = 1800;
-      const step = target / (duration / 16);
-      let current = 0;
-      const timer = setInterval(() => {
-        current = Math.min(current + step, target);
-        el.textContent = Math.floor(current).toLocaleString('es-ES');
-        if (current >= target) clearInterval(timer);
-      }, 16);
-    });
+const translations = {
+  es: {
+    nav_results:"Resultados", nav_how:"Cómo funciona", nav_work:"Trabajos", nav_cta:"Hablemos",
+    hero_tag:"Newsletters para negocios",
+    hero_h1:'Tu negocio necesita<br/>clientes, no <em>seguidores.</em>',
+    hero_sub:"Creo newsletters estratégicas que convierten lectores en clientes. Sin relleno, sin algoritmos, sin depender de las redes sociales.",
+    hero_btn1:"Quiero una newsletter →", hero_btn2:"Ver resultados",
+    ticker1:"Email marketing ROI medio: 3.600%", ticker2:"El email tiene 4× más alcance que las redes sociales", ticker3:"59% de los consumidores dice que el email influye en sus compras",
+    num1:"ROI medio del<br/>email marketing", num2:"Aumento medio de<br/>clientes recurrentes", num3:"Más alcance que<br/>Instagram o TikTok", num4:"De los clientes que vuelven<br/>llegan por email",
+    prob_eyebrow:"El problema", prob_h2:"Tienes un negocio que funciona. Pero tus clientes se olvidan de ti.",
+    prob1_h:"Las redes sociales no son tuyas", prob1_p:"Mañana puede cambiar el algoritmo y perderlo todo. Tu lista de email es un activo que nadie te puede quitar.",
+    prob2_h:"El cliente que no repite es dinero perdido", prob2_p:"Captar un cliente nuevo cuesta entre 5 y 7 veces más que retener uno existente. La newsletter mantiene la relación activa.",
+    prob3_h:"No tienes tiempo de escribir cada semana", prob3_p:"Lo sé. Por eso existo. Yo me encargo de todo: estrategia, redacción y envío. Tú solo supervisas en 10 minutos.",
+    prob4_h:"Sin comunicación constante, el negocio se estanca", prob4_p:"Los negocios que se comunican regularmente con sus clientes crecen un 23% más rápido que los que no lo hacen.",
+    res_eyebrow:"Resultados reales", res_h2:"Lo que consiguen los negocios<br/>con una newsletter bien hecha", res_sub:"Datos de clientes en sectores de servicios locales y profesionales.",
+    res1_sector:"Clínica de fisioterapia", res1_desc:"Aumento de <strong>citas recurrentes</strong> en los primeros 4 meses. Los pacientes volvían antes de que el dolor reapareciera.",
+    res2_sector:"Salón de peluquería", res2_desc:"Incremento en <strong>reservas directas</strong> sin pasar por plataformas intermediarias en 6 meses de newsletter mensual.",
+    res3_sector:"Consultoría B2B", res3_desc:"Multiplicaron sus <strong>contactos cualificados</strong> entrantes. Los prospectos llegaban ya convencidos del valor del servicio.",
+    res4_sector:"Centro de estética", res4_desc:"Crecimiento en <strong>ticket medio por cliente</strong> al comunicar nuevos servicios de forma estratégica cada mes.",
+    res5_sector:"Tasa de apertura media", res5_desc:"Frente al 21% de media del sector. <strong>Más del doble</strong> de lectores reales porque el contenido aporta valor genuino.",
+    res6_sector:"Estudio de arquitectura", res6_desc:"Aumento de <strong>presupuestos solicitados</strong> tras 3 meses mostrando proyectos y criterio profesional en cada edición.",
+    how_eyebrow:"El proceso", how_h2:"De cero a newsletter funcionando en dos semanas.",
+    step1_num:"PASO 01", step1_h:"Sesión de estrategia", step1_p:"Entiendo tu negocio, tus clientes y qué quieres conseguir. Defino el tono, la frecuencia y los temas que van a funcionar.",
+    step2_num:"PASO 02", step2_h:"Primera edición", step2_p:"Redacto la primera newsletter y te la presento. La revisas, me das feedback y queda lista para enviar.",
+    step3_num:"PASO 03", step3_h:"Envío y análisis", step3_p:"Gestiono el envío y te entrego métricas claras: aperturas, clics, respuestas. Sabes exactamente qué funciona.",
+    step4_num:"PASO 04", step4_h:"Mejora continua", step4_p:"Cada edición es mejor que la anterior. Aprendo qué conecta con tu audiencia y afino el contenido cada mes.",
+    port_eyebrow:"Trabajos recientes", port_h2:"Newsletters que ya están<br/>generando resultados.",
+    port1_p:"Newsletter mensual de consejos posturales y bienestar. Contenido educativo que posiciona a la clínica como referente y genera citas antes de que el dolor se agrave.",
+    port1_metric:"citas recurrentes<br/>en 4 meses",
+    port2_p:"Newsletter estacional de tendencias, cuidado capilar y promociones exclusivas para clientas. Convierte lectoras en reservas directas sin depender de Instagram.",
+    port2_metric:"reservas directas<br/>en 6 meses", port_see:"Ver ejemplo →",
+    cta_eyebrow:"¿Hablamos?", cta_h2:'Tu negocio merece<br/>que te <em>recuerden.</em>',
+    cta_p:"Deja tu email y te escribo en menos de 24 horas para contarte cómo podría funcionar una newsletter para tu negocio concreto.",
+    cta_placeholder:"tu@negocio.com", cta_btn:"Quiero saber más", cta_note:"Sin compromiso. Solo una conversación.",
+    footer_copy:"© 2026 · Newsletters que convierten", toast_msg:"Recibido. Te escribo en menos de 24h 📩"
+  },
+  en: {
+    nav_results:"Results", nav_how:"How it works", nav_work:"Work", nav_cta:"Let's talk",
+    hero_tag:"Newsletters for businesses",
+    hero_h1:'Your business needs<br/>clients, not <em>followers.</em>',
+    hero_sub:"I create strategic newsletters that turn readers into clients. No fluff, no algorithms, no social media dependency.",
+    hero_btn1:"I want a newsletter →", hero_btn2:"See results",
+    ticker1:"Average email marketing ROI: 3,600%", ticker2:"Email has 4× more reach than social media", ticker3:"59% of consumers say email influences their purchases",
+    num1:"Average ROI of<br/>email marketing", num2:"Average increase in<br/>returning clients", num3:"More reach than<br/>Instagram or TikTok", num4:"Of returning clients<br/>come via email",
+    prob_eyebrow:"The problem", prob_h2:"You have a business that works. But your clients forget about you.",
+    prob1_h:"Social media doesn't belong to you", prob1_p:"The algorithm can change tomorrow and you lose everything. Your email list is an asset no one can take away.",
+    prob2_h:"A client who doesn't return is money lost", prob2_p:"Acquiring a new client costs 5 to 7 times more than retaining an existing one. The newsletter keeps the relationship alive.",
+    prob3_h:"You don't have time to write every week", prob3_p:"I know. That's why I exist. I handle everything: strategy, writing, and sending. You just review in 10 minutes.",
+    prob4_h:"Without consistent communication, business stagnates", prob4_p:"Businesses that communicate regularly with their clients grow 23% faster than those that don't.",
+    res_eyebrow:"Real results", res_h2:"What businesses achieve<br/>with a well-crafted newsletter", res_sub:"Data from clients in local and professional service sectors.",
+    res1_sector:"Physiotherapy clinic", res1_desc:"Increase in <strong>recurring appointments</strong> in the first 4 months. Patients returned before the pain came back.",
+    res2_sector:"Hair salon", res2_desc:"Increase in <strong>direct bookings</strong> without going through intermediary platforms over 6 months of monthly newsletters.",
+    res3_sector:"B2B consultancy", res3_desc:"They multiplied their <strong>qualified inbound leads</strong>. Prospects arrived already convinced of the service's value.",
+    res4_sector:"Aesthetics centre", res4_desc:"Growth in <strong>average ticket per client</strong> by strategically communicating new services each month.",
+    res5_sector:"Average open rate", res5_desc:"Compared to the 21% industry average. <strong>More than double</strong> the real readers because the content genuinely adds value.",
+    res6_sector:"Architecture studio", res6_desc:"Increase in <strong>quote requests</strong> after 3 months of showcasing projects and professional criteria in each edition.",
+    how_eyebrow:"The process", how_h2:"From zero to a working newsletter in two weeks.",
+    step1_num:"STEP 01", step1_h:"Strategy session", step1_p:"I understand your business, your clients and what you want to achieve. I define the tone, frequency and topics that will work.",
+    step2_num:"STEP 02", step2_h:"First edition", step2_p:"I write the first newsletter and present it to you. You review it, give me feedback and it's ready to send.",
+    step3_num:"STEP 03", step3_h:"Send & analyse", step3_p:"I manage the sending and give you clear metrics: opens, clicks, replies. You know exactly what works.",
+    step4_num:"STEP 04", step4_h:"Continuous improvement", step4_p:"Each edition is better than the last. I learn what connects with your audience and refine the content every month.",
+    port_eyebrow:"Recent work", port_h2:"Newsletters already<br/>generating results.",
+    port1_p:"Monthly newsletter of postural advice and wellbeing. Educational content that positions the clinic as a reference and generates appointments before the pain returns.",
+    port1_metric:"recurring appointments<br/>in 4 months",
+    port2_p:"Seasonal newsletter of trends, hair care and exclusive promotions for clients. Converts readers into direct bookings without relying on Instagram.",
+    port2_metric:"direct bookings<br/>in 6 months", port_see:"See example →",
+    cta_eyebrow:"Shall we talk?", cta_h2:'Your business deserves<br/>to be <em>remembered.</em>',
+    cta_p:"Leave your email and I'll write to you within 24 hours to explain how a newsletter could work for your specific business.",
+    cta_placeholder:"you@business.com", cta_btn:"I want to know more", cta_note:"No commitment. Just a conversation.",
+    footer_copy:"© 2026 · Newsletters that convert", toast_msg:"Received. I'll write to you within 24h 📩"
+  },
+  pt: {
+    nav_results:"Resultados", nav_how:"Como funciona", nav_work:"Trabalhos", nav_cta:"Vamos falar",
+    hero_tag:"Newsletters para negócios",
+    hero_h1:'O seu negócio precisa<br/>de clientes, não de <em>seguidores.</em>',
+    hero_sub:"Crio newsletters estratégicas que convertem leitores em clientes. Sem relleno, sem algoritmos, sem depender das redes sociais.",
+    hero_btn1:"Quero uma newsletter →", hero_btn2:"Ver resultados",
+    ticker1:"ROI médio do email marketing: 3.600%", ticker2:"O email tem 4× mais alcance que as redes sociais", ticker3:"59% dos consumidores diz que o email influencia as suas compras",
+    num1:"ROI médio do<br/>email marketing", num2:"Aumento médio de<br/>clientes recorrentes", num3:"Mais alcance que<br/>Instagram ou TikTok", num4:"Dos clientes que voltam<br/>chegam por email",
+    prob_eyebrow:"O problema", prob_h2:"Tem um negócio que funciona. Mas os seus clientes esquecem-se de si.",
+    prob1_h:"As redes sociais não são suas", prob1_p:"Amanhã o algoritmo pode mudar e perder tudo. A sua lista de email é um ativo que ninguém lhe pode tirar.",
+    prob2_h:"O cliente que não repete é dinheiro perdido", prob2_p:"Captar um novo cliente custa entre 5 a 7 vezes mais do que reter um existente. A newsletter mantém a relação ativa.",
+    prob3_h:"Não tem tempo para escrever todas as semanas", prob3_p:"Eu sei. Por isso existo. Trato de tudo: estratégia, redação e envio. Você só supervisiona em 10 minutos.",
+    prob4_h:"Sem comunicação constante, o negócio estagna", prob4_p:"Os negócios que comunicam regularmente com os seus clientes crescem 23% mais rápido do que os que não o fazem.",
+    res_eyebrow:"Resultados reais", res_h2:"O que conseguem os negócios<br/>com uma newsletter bem feita", res_sub:"Dados de clientes em setores de serviços locais e profissionais.",
+    res1_sector:"Clínica de fisioterapia", res1_desc:"Aumento de <strong>consultas recorrentes</strong> nos primeiros 4 meses. Os pacientes voltavam antes de a dor reaparecer.",
+    res2_sector:"Salão de cabeleireiro", res2_desc:"Aumento de <strong>reservas diretas</strong> sem passar por plataformas intermediárias em 6 meses de newsletter mensal.",
+    res3_sector:"Consultoria B2B", res3_desc:"Multiplicaram os seus <strong>contactos qualificados</strong> inbound. Os prospects chegavam já convencidos do valor do serviço.",
+    res4_sector:"Centro de estética", res4_desc:"Crescimento no <strong>ticket médio por cliente</strong> ao comunicar novos serviços de forma estratégica cada mês.",
+    res5_sector:"Taxa média de abertura", res5_desc:"Contra os 21% de média do setor. <strong>Mais do dobro</strong> de leitores reais porque o conteúdo acrescenta valor genuíno.",
+    res6_sector:"Estúdio de arquitetura", res6_desc:"Aumento de <strong>pedidos de orçamento</strong> após 3 meses a mostrar projetos e critério profissional em cada edição.",
+    how_eyebrow:"O processo", how_h2:"De zero a newsletter a funcionar em duas semanas.",
+    step1_num:"PASSO 01", step1_h:"Sessão de estratégia", step1_p:"Percebo o seu negócio, os seus clientes e o que quer alcançar. Defino o tom, a frequência e os temas que vão funcionar.",
+    step2_num:"PASSO 02", step2_h:"Primeira edição", step2_p:"Escrevo a primeira newsletter e apresento-lha. Você revê, dá-me feedback e fica pronta para enviar.",
+    step3_num:"PASSO 03", step3_h:"Envio e análise", step3_p:"Giro o envio e entrego-lhe métricas claras: aberturas, cliques, respostas. Sabe exatamente o que funciona.",
+    step4_num:"PASSO 04", step4_h:"Melhoria contínua", step4_p:"Cada edição é melhor que a anterior. Aprendo o que liga com a sua audiência e aperfeiçoo o conteúdo todos os meses.",
+    port_eyebrow:"Trabalhos recentes", port_h2:"Newsletters que já estão<br/>a gerar resultados.",
+    port1_p:"Newsletter mensal de conselhos posturais e bem-estar. Conteúdo educativo que posiciona a clínica como referência e gera consultas antes de a dor reaparecer.",
+    port1_metric:"consultas recorrentes<br/>em 4 meses",
+    port2_p:"Newsletter sazonal de tendências, cuidado capilar e promoções exclusivas para clientes. Converte leitoras em reservas diretas sem depender do Instagram.",
+    port2_metric:"reservas diretas<br/>em 6 meses", port_see:"Ver exemplo →",
+    cta_eyebrow:"Falamos?", cta_h2:'O seu negócio merece<br/>ser <em>lembrado.</em>',
+    cta_p:"Deixe o seu email e escrevo-lhe em menos de 24 horas para explicar como uma newsletter poderia funcionar para o seu negócio concreto.",
+    cta_placeholder:"voce@negocio.com", cta_btn:"Quero saber mais", cta_note:"Sem compromisso. Só uma conversa.",
+    footer_copy:"© 2026 · Newsletters que convertem", toast_msg:"Recebido. Escrevo-lhe em menos de 24h 📩"
+  },
+  de: {
+    nav_results:"Ergebnisse", nav_how:"So funktioniert's", nav_work:"Arbeiten", nav_cta:"Kontakt",
+    hero_tag:"Newsletter für Unternehmen",
+    hero_h1:'Ihr Unternehmen braucht<br/>Kunden, keine <em>Follower.</em>',
+    hero_sub:"Ich erstelle strategische Newsletter, die Leser in Kunden verwandeln. Ohne Füllmaterial, ohne Algorithmen, ohne Social-Media-Abhängigkeit.",
+    hero_btn1:"Ich möchte einen Newsletter →", hero_btn2:"Ergebnisse ansehen",
+    ticker1:"Durchschnittlicher E-Mail-Marketing-ROI: 3.600%", ticker2:"E-Mail hat 4× mehr Reichweite als Social Media", ticker3:"59% der Verbraucher sagen, E-Mail beeinflusst ihre Käufe",
+    num1:"Durchschnittlicher ROI des<br/>E-Mail-Marketings", num2:"Durchschnittlicher Anstieg von<br/>Stammkunden", num3:"Mehr Reichweite als<br/>Instagram oder TikTok", num4:"Der wiederkehrenden Kunden<br/>kommen per E-Mail",
+    prob_eyebrow:"Das Problem", prob_h2:"Sie haben ein funktionierendes Unternehmen. Aber Ihre Kunden vergessen Sie.",
+    prob1_h:"Social Media gehört Ihnen nicht", prob1_p:"Der Algorithmus kann sich morgen ändern und alles verloren sein. Ihre E-Mail-Liste ist ein Asset, das Ihnen niemand nehmen kann.",
+    prob2_h:"Ein Kunde, der nicht zurückkommt, ist verlorenes Geld", prob2_p:"Einen neuen Kunden zu gewinnen kostet 5 bis 7 Mal mehr als einen bestehenden zu halten. Der Newsletter hält die Beziehung lebendig.",
+    prob3_h:"Sie haben keine Zeit, jede Woche zu schreiben", prob3_p:"Ich weiß. Deshalb bin ich da. Ich kümmere mich um alles: Strategie, Text und Versand. Sie überprüfen nur in 10 Minuten.",
+    prob4_h:"Ohne konstante Kommunikation stagniert das Geschäft", prob4_p:"Unternehmen, die regelmäßig mit ihren Kunden kommunizieren, wachsen 23% schneller als solche, die es nicht tun.",
+    res_eyebrow:"Echte Ergebnisse", res_h2:"Was Unternehmen erreichen<br/>mit einem gut gemachten Newsletter", res_sub:"Daten von Kunden in lokalen und professionellen Dienstleistungssektoren.",
+    res1_sector:"Physiotherapieklinik", res1_desc:"Anstieg der <strong>wiederkehrenden Termine</strong> in den ersten 4 Monaten. Patienten kamen zurück, bevor der Schmerz wiederkehrte.",
+    res2_sector:"Friseursalon", res2_desc:"Zunahme der <strong>direkten Buchungen</strong> ohne Zwischenhändlerplattformen in 6 Monaten monatlicher Newsletter.",
+    res3_sector:"B2B-Beratung", res3_desc:"Sie vervielfachten ihre <strong>qualifizierten Inbound-Kontakte</strong>. Interessenten kamen bereits vom Wert des Services überzeugt.",
+    res4_sector:"Schönheitszentrum", res4_desc:"Wachstum beim <strong>durchschnittlichen Ticket pro Kunde</strong> durch strategische Kommunikation neuer Dienstleistungen jeden Monat.",
+    res5_sector:"Durchschnittliche Öffnungsrate", res5_desc:"Gegenüber 21% Branchendurchschnitt. <strong>Mehr als doppelt</strong> so viele echte Leser, weil der Inhalt echten Mehrwert bietet.",
+    res6_sector:"Architekturbüro", res6_desc:"Anstieg der <strong>Angebotsanfragen</strong> nach 3 Monaten, in denen Projekte und professionelle Kriterien in jeder Ausgabe präsentiert wurden.",
+    how_eyebrow:"Der Prozess", how_h2:"Von null zu einem funktionierenden Newsletter in zwei Wochen.",
+    step1_num:"SCHRITT 01", step1_h:"Strategiesitzung", step1_p:"Ich verstehe Ihr Unternehmen, Ihre Kunden und was Sie erreichen wollen. Ich definiere Ton, Häufigkeit und Themen, die funktionieren.",
+    step2_num:"SCHRITT 02", step2_h:"Erste Ausgabe", step2_p:"Ich schreibe den ersten Newsletter und präsentiere ihn Ihnen. Sie prüfen ihn, geben mir Feedback und er ist versandbereit.",
+    step3_num:"SCHRITT 03", step3_h:"Versand & Analyse", step3_p:"Ich manage den Versand und liefere Ihnen klare Metriken: Öffnungen, Klicks, Antworten. Sie wissen genau, was funktioniert.",
+    step4_num:"SCHRITT 04", step4_h:"Kontinuierliche Verbesserung", step4_p:"Jede Ausgabe ist besser als die letzte. Ich lerne, was bei Ihrem Publikum ankommt, und verfeinere den Inhalt jeden Monat.",
+    port_eyebrow:"Aktuelle Arbeiten", port_h2:"Newsletter, die bereits<br/>Ergebnisse erzielen.",
+    port1_p:"Monatlicher Newsletter mit Haltungsratschlägen und Wohlbefinden. Bildungsinhalt, der die Klinik als Referenz positioniert und Termine generiert, bevor der Schmerz zurückkommt.",
+    port1_metric:"wiederkehrende Termine<br/>in 4 Monaten",
+    port2_p:"Saisonaler Newsletter über Trends, Haarpflege und exklusive Aktionen für Kundinnen. Wandelt Leserinnen in direkte Buchungen um, ohne von Instagram abhängig zu sein.",
+    port2_metric:"direkte Buchungen<br/>in 6 Monaten", port_see:"Beispiel ansehen →",
+    cta_eyebrow:"Sprechen wir?", cta_h2:'Ihr Unternehmen verdient es,<br/><em>erinnert zu werden.</em>',
+    cta_p:"Hinterlassen Sie Ihre E-Mail und ich schreibe Ihnen innerhalb von 24 Stunden, um zu erklären, wie ein Newsletter für Ihr konkretes Unternehmen funktionieren könnte.",
+    cta_placeholder:"sie@unternehmen.de", cta_btn:"Ich möchte mehr wissen", cta_note:"Unverbindlich. Nur ein Gespräch.",
+    footer_copy:"© 2026 · Newsletter, die konvertieren", toast_msg:"Erhalten. Ich schreibe Ihnen in weniger als 24h 📩"
+  },
+  it: {
+    nav_results:"Risultati", nav_how:"Come funziona", nav_work:"Lavori", nav_cta:"Parliamo",
+    hero_tag:"Newsletter per le aziende",
+    hero_h1:'La tua azienda ha bisogno<br/>di clienti, non di <em>follower.</em>',
+    hero_sub:"Creo newsletter strategiche che trasformano i lettori in clienti. Senza riempitivo, senza algoritmi, senza dipendere dai social media.",
+    hero_btn1:"Voglio una newsletter →", hero_btn2:"Vedi i risultati",
+    ticker1:"ROI medio dell'email marketing: 3.600%", ticker2:"L'email ha 4× più portata dei social media", ticker3:"Il 59% dei consumatori dice che l'email influenza i loro acquisti",
+    num1:"ROI medio<br/>dell'email marketing", num2:"Aumento medio di<br/>clienti ricorrenti", num3:"Più portata di<br/>Instagram o TikTok", num4:"Dei clienti che tornano<br/>arrivano via email",
+    prob_eyebrow:"Il problema", prob_h2:"Hai un'azienda che funziona. Ma i tuoi clienti si dimenticano di te.",
+    prob1_h:"I social media non ti appartengono", prob1_p:"Domani l'algoritmo può cambiare e perdere tutto. La tua lista email è un asset che nessuno può toglierti.",
+    prob2_h:"Il cliente che non torna è denaro perso", prob2_p:"Acquisire un nuovo cliente costa da 5 a 7 volte di più che mantenerne uno esistente. La newsletter tiene viva la relazione.",
+    prob3_h:"Non hai tempo di scrivere ogni settimana", prob3_p:"Lo so. Per questo esisto. Mi occupo di tutto: strategia, testi e invio. Tu supervisioni solo in 10 minuti.",
+    prob4_h:"Senza comunicazione costante, il business si ferma", prob4_p:"Le aziende che comunicano regolarmente con i propri clienti crescono il 23% più velocemente di quelle che non lo fanno.",
+    res_eyebrow:"Risultati reali", res_h2:"Cosa ottengono le aziende<br/>con una newsletter ben fatta", res_sub:"Dati da clienti nei settori dei servizi locali e professionali.",
+    res1_sector:"Clinica di fisioterapia", res1_desc:"Aumento delle <strong>visite ricorrenti</strong> nei primi 4 mesi. I pazienti tornavano prima che il dolore ricomparisse.",
+    res2_sector:"Salone di parrucchiere", res2_desc:"Incremento delle <strong>prenotazioni dirette</strong> senza passare per piattaforme intermediarie in 6 mesi di newsletter mensile.",
+    res3_sector:"Consulenza B2B", res3_desc:"Hanno moltiplicato i loro <strong>contatti qualificati</strong> in entrata. I prospect arrivavano già convinti del valore del servizio.",
+    res4_sector:"Centro estetico", res4_desc:"Crescita nel <strong>ticket medio per cliente</strong> comunicando nuovi servizi in modo strategico ogni mese.",
+    res5_sector:"Tasso di apertura medio", res5_desc:"Rispetto al 21% della media del settore. <strong>Più del doppio</strong> dei lettori reali perché il contenuto aggiunge valore genuino.",
+    res6_sector:"Studio di architettura", res6_desc:"Aumento dei <strong>preventivi richiesti</strong> dopo 3 mesi a mostrare progetti e criteri professionali in ogni edizione.",
+    how_eyebrow:"Il processo", how_h2:"Da zero a una newsletter funzionante in due settimane.",
+    step1_num:"PASSO 01", step1_h:"Sessione di strategia", step1_p:"Capisco la tua azienda, i tuoi clienti e cosa vuoi ottenere. Definisco il tono, la frequenza e i temi che funzioneranno.",
+    step2_num:"PASSO 02", step2_h:"Prima edizione", step2_p:"Scrivo la prima newsletter e te la presento. Tu la rivedi, mi dai feedback ed è pronta per l'invio.",
+    step3_num:"PASSO 03", step3_h:"Invio e analisi", step3_p:"Gestisco l'invio e ti fornisco metriche chiare: aperture, clic, risposte. Sai esattamente cosa funziona.",
+    step4_num:"PASSO 04", step4_h:"Miglioramento continuo", step4_p:"Ogni edizione è migliore della precedente. Imparo cosa risuona con il tuo pubblico e affino il contenuto ogni mese.",
+    port_eyebrow:"Lavori recenti", port_h2:"Newsletter che stanno già<br/>generando risultati.",
+    port1_p:"Newsletter mensile di consigli posturali e benessere. Contenuto educativo che posiziona la clinica come riferimento e genera appuntamenti prima che il dolore ritorni.",
+    port1_metric:"visite ricorrenti<br/>in 4 mesi",
+    port2_p:"Newsletter stagionale di tendenze, cura dei capelli e promozioni esclusive per le clienti. Converte le lettrici in prenotazioni dirette senza dipendere da Instagram.",
+    port2_metric:"prenotazioni dirette<br/>in 6 mesi", port_see:"Vedi esempio →",
+    cta_eyebrow:"Parliamo?", cta_h2:'La tua azienda merita<br/>di essere <em>ricordata.</em>',
+    cta_p:"Lascia la tua email e ti scrivo entro 24 ore per spiegarti come potrebbe funzionare una newsletter per la tua azienda specifica.",
+    cta_placeholder:"tu@azienda.it", cta_btn:"Voglio saperne di più", cta_note:"Senza impegno. Solo una conversazione.",
+    footer_copy:"© 2026 · Newsletter che convertono", toast_msg:"Ricevuto. Ti scrivo entro 24h 📩"
   }
+};
 
-  // Trigger when numbers section is visible
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCounters();
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
+let currentLang = 'es';
 
-  const numbersSection = document.querySelector('.numbers');
-  if (numbersSection) observer.observe(numbersSection);
+function toggleLang() {
+  document.getElementById('langDropdown').classList.toggle('open');
+}
 
-  // Contact form with Formspree
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const data = new FormData(contactForm);
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
-      if (response.ok) {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        contactForm.reset();
-        setTimeout(() => toast.classList.remove('show'), 4000);
-      }
-    });
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-selector')) {
+    document.getElementById('langDropdown').classList.remove('open');
   }
+});
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('currentLang').textContent = lang.toUpperCase();
+  document.getElementById('langDropdown').classList.remove('open');
+  document.querySelectorAll('.lang-option').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang === 'es' ? 'español' : lang === 'en' ? 'english' : lang === 'pt' ? 'portugu' : lang === 'de' ? 'deutsch' : 'italiano'));
+  });
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+// Counter animation
+function animateCounters() {
+  document.querySelectorAll('.count').forEach(el => {
+    const target = +el.dataset.target;
+    const duration = 1800;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current).toLocaleString('es-ES');
+      if (current >= target) clearInterval(timer);
+    }, 16);
+  });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCounters(); observer.disconnect(); } });
+}, { threshold: 0.3 });
+const numbersSection = document.querySelector('.numbers');
+if (numbersSection) observer.observe(numbersSection);
+
+// Formspree
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(contactForm);
+    const response = await fetch(contactForm.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+    if (response.ok) {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      contactForm.reset();
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+  });
+}
 </script>
 </body>
 </html>
